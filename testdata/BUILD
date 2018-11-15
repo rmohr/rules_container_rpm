@@ -1,12 +1,10 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-
 load(
     "@io_bazel_rules_docker//container:container.bzl",
     "container_image",
 )
-
 load(
     "//rpm:rpm.bzl",
     "rpm_image",
@@ -21,12 +19,18 @@ container_image(
 rpm_image(
     name = "allinone",
     base = ":files_base",
-    rpms = ["@glibc//file", "@ca_certificates//file"],
+    rpms = [
+        "@glibc//file",
+        "@ca_certificates//file",
+    ],
 )
 
 rpm_image(
     name = "allinone_no_base",
-    rpms = ["@glibc//file", "@ca_certificates//file"],
+    rpms = [
+        "@glibc//file",
+        "@ca_certificates//file",
+    ],
 )
 
 rpm_image(
