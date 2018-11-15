@@ -40,7 +40,7 @@ def main():
         # Extract the rpms into the shared folder
         for rpm in args.rpm:
             p1 = subprocess.Popen(["rpm2cpio", rpm], stdout=subprocess.PIPE)
-            p2 = subprocess.Popen(["cpio", "-i", "-d", "-m", "-v", "-D", dirpath], stdin=p1.stdout, stdout=subprocess.PIPE)
+            p2 = subprocess.Popen(["cpio", "-i", "-d", "-m", "-v"], stdin=p1.stdout, stdout=subprocess.PIPE, cwd=dirpath)
             p1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
             p2.communicate()
 
