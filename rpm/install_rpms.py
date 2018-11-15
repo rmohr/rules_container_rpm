@@ -5,7 +5,6 @@ import tarfile
 import argparse
 from os import path
 
-
 parser = argparse.ArgumentParser(
     description='Install RPMs and update the RPM database inside the docker image')
 
@@ -17,6 +16,11 @@ parser.add_argument('--rpm', action='append', required=True,
 
 parser.add_argument('--output', action='store', required=True,
                     help=('target archive'))
+
+
+class RPMError(Exception):
+    pass
+
 
 def main():
     args = parser.parse_args()
@@ -35,19 +39,28 @@ def main():
 
         # Register the RPMs in the database
         for rpm in args.rpm:
-            subprocess.check_call(["rpm", "--nosignature", "--dbpath", rpmdb, "-i", "-v", "--ignoresize", "--nodeps", "--noscripts" ,"--notriggers" ,"--excludepath", "/",  rpm])
+            subprocess.check_call(
+                ["rpm", "--nosignature", "--dbpath", rpmdb, "-i", "-v", "--ignoresize", "--nodeps", "--noscripts",
+                 "--notriggers", "--excludepath", "/", rpm])
 
         # Extract the rpms into the shared folder
         for rpm in args.rpm:
             p1 = subprocess.Popen(["rpm2cpio", rpm], stdout=subprocess.PIPE)
-            p2 = subprocess.Popen(["cpio", "-i", "-d", "-m", "-v"], stdin=p1.stdout, stdout=subprocess.PIPE, cwd=dirpath)
+            p2 = subprocess.Popen(["cpio", "-i", "-d", "-m", "-v"], stdin=p1.stdout, stdout=subprocess.PIPE,
+                                  cwd=dirpath)
             p1.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
             p2.communicate()
+            if p1.returncode and p1.returncode != 0:
+                print(p1.returncode)
+                raise RPMError("rpm2cpio exited with a non-zero exit code: %d" % p1.returncode)
+            if p2.returncode and p2.returncode != 0:
+                raise RPMError("cpio exited with a non-zero exit code: %d" % p2.returncode)
 
         with tarfile.open(args.output, "a") as tar:
             tar.add(dirpath, arcname="/")
     finally:
         shutil.rmtree(dirpath)
+
 
 if __name__ == '__main__':
     main()
