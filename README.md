@@ -7,16 +7,30 @@ This allows building small and reproducible images with RPMs. Because the rpm da
 
 ## Load it into your WORKSPACE
 
-```
+```python
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "29d109605e0d6f9c892584f07275b8c9260803bf0c6fcb7de2623b2bedc910bd",
+    strip_prefix = "rules_docker-0.5.1",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.5.1.tar.gz"],
+)
+
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    container_repositories = "repositories",
+)
+container_repositories()
+
+http_archive(
     name = "io_bazel_rules_container_rpm",
-    sha256 = "XYZ",
+    sha256 = "515f74276684d47b54543ccf940a8ecdc3d8e31549efa0e968f5c191e8826bf3",
     strip_prefix = "rules_container_rpm-0.0.1",
     urls = ["https://github.com/rmohr/rules_container_rpm/archive/v0.0.1.tar.gz"],
 )
 
+# Let's define the glibc rpm for reference in a rpm_image rule
 http_file(
    name = "glibc",
    url = "https://dl.fedoraproject.org/pub/fedora/linux/releases/28/Everything/x86_64/os/Packages/g/glibc-2.27-8.fc28.x86_64.rpm",
@@ -27,7 +41,7 @@ http_file(
 ## Use it in your BUILD file
 
 
-```
+```python
 load(
     "@io_bazel_rules_docker//container:container.bzl",
     "container_image",
@@ -46,18 +60,6 @@ container_image(
 
 rpm_image(
     name = "allinone",
-    base = ":files_base",
-    rpms = ["@glibc//file", "@ca_certificates//file"],
-)
-
-rpm_image(
-    name = "image2",
-    base = ":image1",
-    rpms = ["@ca_certificates//file"],
-)
-
-rpm_image(
-    name = "image1",
     base = ":files_base",
     rpms = ["@glibc//file"],
 )
