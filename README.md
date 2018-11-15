@@ -27,9 +27,9 @@ container_repositories()
 
 http_archive(
     name = "io_bazel_rules_container_rpm",
-    sha256 = "d0a166040a5795acd3b04a557c8996f0abf5f9ede60a85aafa1a068e278b41a2",
-    strip_prefix = "rules_container_rpm-0.0.2",
-    urls = ["https://github.com/rmohr/rules_container_rpm/archive/v0.0.2.tar.gz"],
+    sha256 = "7ace5bc7aa10697196d3c48ef5d73b0fc52b6e27c0bad3ce10751f66c5cc383c",
+    strip_prefix = "rules_container_rpm-0.0.3",
+    urls = ["https://github.com/rmohr/rules_container_rpm/archive/v0.0.3.tar.gz"],
 )
 
 # Let's define the glibc rpm for reference in a rpm_image rule
