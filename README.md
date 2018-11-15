@@ -1,5 +1,7 @@
 # rules_container_rpm
 
+[![Build Status](https://travis-ci.org/rmohr/rules_container_rpm.svg?branch=master)](https://travis-ci.org/rmohr/rules_container_rpm)
+
 Bazel rules to install and manage rpms inside of containers.
 
 These rules can be used to install RPM packages into a cointainer and update its included RPM database without the need to run the container.
