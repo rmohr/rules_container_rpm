@@ -23,3 +23,9 @@ container_test(
     configs = ["configs/allinone.yaml"],
     image = "//testdata:allinone_no_base",
 )
+
+container_test(
+    name = "image_with_extra_tar_test",
+    configs = ["configs/image_with_extra_tar.yaml"],
+    image = "//testdata:image_with_extra_tar",
+)

@@ -8,10 +8,14 @@ fileExistenceTests:
   path: '/var/lib/rpm/Packages'
   shouldExist: true
   permissions: '-rw-r--r--'
-- name: 'readme from ca-certificates'
+- name: 'readme from ca-certificates should not be there'
   path: '/usr/share/pki/ca-trust-source/README'
+  shouldExist: false
+- name: '/foo should be there'
+  path: '/foo'
   shouldExist: true
   permissions: '-rw-r--r--'
 - name: '/etc/test/foo should be there'
   path: '/etc/test/foo'
-  shouldExist: false
+  shouldExist: true
+  permissions: '-rw-r--r--'

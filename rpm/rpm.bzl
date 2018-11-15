@@ -30,7 +30,7 @@ def _rpms_impl(ctx, rpms = None):
     )
     tars = [finaltar]
     if ctx.attr.tars:
-        tars = tars + ctx.attr.tars
+        tars = tars + ctx.files.tars
     return _container.image.implementation(ctx, tars = tars)
 
 _rpms_layer = rule(
