@@ -17,3 +17,9 @@ container_test(
     configs = ["configs/allinone.yaml"],
     image = "//testdata:allinone",
 )
+
+container_test(
+    name = "allinone_no_base_test",
+    configs = ["configs/allinone.yaml"],
+    image = "//testdata:allinone_no_base",
+)

@@ -23,6 +23,11 @@ rpm_image(
 )
 
 rpm_image(
+    name = "allinone_no_base",
+    rpms = ["@glibc//file", "@ca_certificates//file"],
+)
+
+rpm_image(
     name = "image2",
     base = ":image1",
     rpms = ["@ca_certificates//file"],

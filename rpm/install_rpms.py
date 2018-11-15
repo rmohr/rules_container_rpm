@@ -9,8 +9,8 @@ from os import path
 parser = argparse.ArgumentParser(
     description='Install RPMs and update the RPM database inside the docker image')
 
-parser.add_argument('--uncompressed_layer', action='append', required=True,
-                    help='The output file, mandatory')
+parser.add_argument('--uncompressed_layer', action='append', required=False,
+                    help='The output file, mandatory', default=[])
 
 parser.add_argument('--rpm', action='append', required=True,
                     help=('rpms to add to the database'))
