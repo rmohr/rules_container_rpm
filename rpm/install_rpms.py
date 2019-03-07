@@ -40,8 +40,19 @@ def main():
         # Register the RPMs in the database
         for rpm in args.rpm:
             subprocess.check_call(
-                ["rpm", "--nosignature", "--dbpath", rpmdb, "-i", "-v", "--ignoresize", "--nodeps", "--noscripts",
-                 "--notriggers", "--excludepath", "/", rpm])
+                ["rpm",
+                 "--nosignature",
+                 "--dbpath", rpmdb,
+                 "-i",
+                 "-v",
+                 "--ignoresize",
+                 "--ignorearch",
+                 "--ignoreos",
+                 "--nodeps",
+                 "--noscripts",
+                 "--notriggers",
+                 "--excludepath", "/", rpm]
+            )
 
         # Extract the rpms into the shared folder
         for rpm in args.rpm:
