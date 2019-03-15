@@ -14,22 +14,22 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "29d109605e0d6f9c892584f07275b8c9260803bf0c6fcb7de2623b2bedc910bd",
-    strip_prefix = "rules_docker-0.5.1",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.5.1.tar.gz"],
+    sha256 = "aed1c249d4ec8f703edddf35cbe9dfaca0b5f5ea6e4cd9e83e99f3b0d1136c3d",
+    strip_prefix = "rules_docker-0.7.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.7.0.tar.gz"],
 )
 
 load(
-    "@io_bazel_rules_docker//container:container.bzl",
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
 )
 container_repositories()
 
 http_archive(
     name = "io_bazel_rules_container_rpm",
-    sha256 = "b419c25576e148e537a93fafdc10cb78faf1174558d853754727b586793e71d1",
-    strip_prefix = "rules_container_rpm-0.0.4",
-    urls = ["https://github.com/rmohr/rules_container_rpm/archive/v0.0.4.tar.gz"],
+    sha256 = "151261f1b81649de6e36f027c945722bff31176f1340682679cade2839e4b1e1",
+    strip_prefix = "rules_container_rpm-0.0.5",
+    urls = ["https://github.com/rmohr/rules_container_rpm/archive/v0.0.5.tar.gz"],
 )
 
 # Let's define the glibc rpm for reference in a rpm_image rule
