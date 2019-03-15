@@ -46,7 +46,6 @@ _rpms_layer = rule(
     }.items()),
     executable = True,
     outputs = _container.image.outputs,
-    # TODO: rpm toolchain?
-    #toolchains = ["@io_bazel_rules_docker//toolchains/docker:toolchain_type"],
+    toolchains = ["@io_bazel_rules_docker//toolchains/docker:toolchain_type"],
     implementation = _rpms_impl,
 )
