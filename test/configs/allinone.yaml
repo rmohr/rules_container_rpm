@@ -4,14 +4,22 @@ fileExistenceTests:
   path: '/sbin/ldconfig'
   shouldExist: true
   permissions: '-rwxr-xr-x'
+  uid: 0
+  gid: 0
 - name: 'rpm database file'
   path: '/var/lib/rpm/Packages'
   shouldExist: true
   permissions: '-rw-r--r--'
+  uid: 0
+  gid: 0
 - name: 'readme from ca-certificates'
   path: '/usr/share/pki/ca-trust-source/README'
   shouldExist: true
   permissions: '-rw-r--r--'
+  uid: 0
+  gid: 0
 - name: '/etc/test/foo should be there'
   path: '/etc/test/foo'
   shouldExist: false
+  uid: 0
+  gid: 0
