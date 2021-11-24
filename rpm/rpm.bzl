@@ -16,17 +16,18 @@ def _rpms_impl(ctx, rpms = None):
     parent_parts = _get_layers(ctx, ctx.label.name, ctx.attr.base)
     uncompressed_blobs = parent_parts.get("unzipped_layer", [])
     uncompressed_layer_args = ["--uncompressed_layer=" + f.path for f in uncompressed_blobs]
-    rpm_args = ["--rpm=" + f.path for f in rpms]
+    rpm_args = ["--", rpm_installer.path] + ["--rpm=" + f.path for f in rpms]
     finaltar = ctx.actions.declare_file(ctx.label.name + "-installed-rpms.tar")
     target = "--output=%s" % finaltar.path
     ctx.actions.run(
-        executable = rpm_installer,
+        executable = 'fakeroot',
         arguments = rpm_args + uncompressed_layer_args + [target],
         inputs = rpms + uncompressed_blobs,
         outputs = [finaltar],
         use_default_shell_env = True,
         progress_message = "Install RPMs inside a container",
         mnemonic = "installrpms",
+        tools = [rpm_installer],
     )
     tars = [finaltar]
     if ctx.attr.tars:
