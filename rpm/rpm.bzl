@@ -34,7 +34,7 @@ def _rpms_impl(ctx, rpms = None):
     return _container.image.implementation(ctx, tars = tars)
 
 _rpms_layer = rule(
-    attrs = dict(_container.image.attrs.items() + {
+    attrs = dict([ item for item in _container.image.attrs.items() if item[0] != "_allowlist_function_transition" ]  + {
         # The dependency whose runfiles we're appending.
         "rpms": attr.label_list(allow_files = True, mandatory = True),
         "_rpm_installer": attr.label(
